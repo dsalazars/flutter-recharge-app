@@ -38,12 +38,11 @@ class RemoteDataSource {
         },
         onRequest: (r, handler) async {
           r.headers['x-api-key'] = apiKey;
-          final token = await getToken(); // Obtener el token dinámicamente
-          //print('Token recibido--------: ${token}');
+          final token = await getToken();
 
           if (token != null) {
             r.headers['Authorization'] =
-                token; // Agregar el token al header
+                token;
           }
           handler.next(r);
         },

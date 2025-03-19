@@ -47,7 +47,7 @@ class LoginPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                const LoginForm(), // Formulario separado
+                const LoginForm(),
                 const SizedBox(height: 20)
               ],
             ),

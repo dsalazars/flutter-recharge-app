@@ -21,14 +21,12 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     result.fold(
       (failure) {
-        // Si falla, actualiza el estado con el mensaje de error
         state = state.copyWith(
           isLoading: false,
           errorMessage: failure.message,
         );
       },
       (token) {
-        // Si tiene éxito, guarda el token y actualiza el estado
         state = state.copyWith(
           isLoading: false,
           token: token,

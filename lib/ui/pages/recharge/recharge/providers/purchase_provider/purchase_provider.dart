@@ -3,19 +3,30 @@ import 'package:puntored/data/failure.dart';
 import 'package:puntored/domain/entities/purchase_request_entity.dart';
 import 'package:puntored/domain/entities/recharge_result_entity.dart';
 import 'package:puntored/domain/use_cases/get_puntored_api.dart';
-
 import '../../../../../../dependecy_injection/injection.dart';
 import '../../../../../../domain/use_cases/get_local_use_cases.dart';
 import 'purchase_state.dart';
 
 class PurchaseNotifier extends StateNotifier<PurchaseState> {
   final GetPuntoredApi getPuntoredApi;
-   final GetLocalUseCases localUseCases;
+  final GetLocalUseCases getLocalUseCases;
 
-  PurchaseNotifier(this.getPuntoredApi,) : super(PurchaseIdle());
+  PurchaseNotifier(this.getPuntoredApi, this.getLocalUseCases) : super(PurchaseIdle()) {
+    _loadLocalRecharges();
+  }
+
+  // Cargar recargas locales al iniciar
+  Future<void> _loadLocalRecharges() async {
+    final localResults = await getLocalUseCases.getRechargeResultsByUser("duvan");
+    localResults.fold(
+      (failure) => print('Error al cargar recargas locales: ${failure.message}'),
+      (list) {
+        state = PurchaseSuccess("Recargas cargadas", list);
+      },
+    );
+  }
 
   Future<void> realizarCompra(PurchaseRequestEntity purchase) async {
-   
     state = PurchaseLoading();
     final result = await getPuntoredApi.postPurchase(purchase);
     result.fold(
@@ -23,11 +34,9 @@ class PurchaseNotifier extends StateNotifier<PurchaseState> {
         state = PurchaseError(_mapFailureToMessage(failure));
       },
       (response) async {
-        state = PurchaseSuccess(response.message!);
-
-        // Guardar respuesta en la base de datos local
+        // Guardar en SQLite
         final rechargeResult = RechargeResultEntity(
-          username: "alejo",
+          username: "duvan",
           transaccionId: response.transactionalID ?? '',
           status: response.message!,
           supply: purchase.supplierId,
@@ -35,23 +44,10 @@ class PurchaseNotifier extends StateNotifier<PurchaseState> {
           number: purchase.cellPhone,
         );
 
-        final saveResult = await localUseCases.saveRechargeResult(rechargeResult);
+        final saveResult = await getLocalUseCases.saveRechargeResult(rechargeResult);
         saveResult.fold(
           (failure) => print('Error al guardar en local: ${failure.message}'),
-          (_) async {
-            // Consultar e imprimir por consola los registros locales
-            final localResults = await localUseCases.getRechargeResultsByUser("alejo");
-            localResults.fold(
-              (failure) => print('Error al obtener registros locales: ${failure.message}'),
-              (list) {
-                print('Registros almacenados en local para el usuario ${"alejo"}:');
-                for (var item in list) {
-                  print(
-                      'ID: ${item.transaccionId}, Estado: ${item.status}, Número: ${item.number}, Monto: ${item.amount}');
-                }
-              },
-            );
-          },
+          (_) async => _loadLocalRecharges(), // Recargar lista local
         );
       },
     );
@@ -64,6 +60,7 @@ class PurchaseNotifier extends StateNotifier<PurchaseState> {
   }
 }
 
+// Proveedor del PurchaseNotifier
 final purchaseProvider = StateNotifierProvider<PurchaseNotifier, PurchaseState>(
   (ref) => locator<PurchaseNotifier>(),
 );

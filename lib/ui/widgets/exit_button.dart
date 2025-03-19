@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class ExitButton extends StatelessWidget {
-  const ExitButton({super.key});
+class LogoutButton extends StatelessWidget {
+  final VoidCallback onLogout;
 
-  void _exitApp() {
-    SystemNavigator.pop(); // Cierra la app
-  }
+  const LogoutButton({super.key, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: _exitApp,
-      icon: const Icon(Icons.exit_to_app, color: Colors.white),
-      label: const Text("Salir", style: TextStyle(color: Colors.white)),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.redAccent,
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
+    return IconButton(
+      icon: const Icon(Icons.exit_to_app, color: Colors.pink),
+      onPressed: onLogout,
+      tooltip: 'Cerrar sesión',
     );
   }
 }

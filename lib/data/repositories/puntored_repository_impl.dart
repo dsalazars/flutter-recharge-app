@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:puntored/data/datasource/remote_datasource.dart';
 import 'package:puntored/data/exception.dart';
@@ -7,7 +6,6 @@ import 'package:puntored/data/failure.dart';
 import 'package:puntored/domain/entities/proveedores_recarga_entity.dart';
 import 'package:puntored/domain/repositories/puntored_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../../domain/entities/purchase_request_entity.dart';
 import '../../domain/entities/purchase_response_entity.dart';
 import '../model/proveedores_recarga_model.dart';
@@ -72,7 +70,7 @@ Future<Either<Failure, PurchaseResponseEntity>> postPurchase(PurchaseRequestEnti
       await storage.write(key: 'auth_token', value: token['token']);
       return Right(token['token']);
     } on ServerException {
-      return const Left(ServerFailure('Error en el servidor'));
+      return const Left(ServerFailure('Nombre de usuario o contraseña incorrectos'));
     } on SocketException {
       return const Left(ConnectionFailure('Error de conexión a la red'));
     }

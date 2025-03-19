@@ -23,7 +23,7 @@ class HomeButton extends StatelessWidget {
       label: Text(label, style: const TextStyle(color: Colors.white)),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8), // Menos redondeado
+          borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),

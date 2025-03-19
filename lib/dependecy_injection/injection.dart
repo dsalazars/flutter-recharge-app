@@ -27,13 +27,11 @@ Future<void> init() async {
   // providers
   locator.registerLazySingleton(() => LoginNotifier(locator()));
   locator.registerLazySingleton(() => ProveedoresNotifier(locator()));
-  locator.registerLazySingleton(() => PurchaseNotifier(locator()));
+  locator.registerLazySingleton(() => PurchaseNotifier(locator(),locator()));
 
-  // usecases
   locator.registerLazySingleton(() => GetPuntoredApi(locator()));
   locator.registerLazySingleton(() => GetLocalUseCases(locator()));
 
-  // repositories
   locator.registerLazySingleton<PuntoredRepository>(
     () => PuntoredRepositoryImpl(
       remoteDataSource: locator(),
@@ -43,11 +41,6 @@ locator.registerLazySingleton<LocalRepository>(
   () => LocalRepositoryImpl(localDataSource: locator()),
 );
 
-
-
-
-
-  // datasources
   locator.registerLazySingleton<RemoteDataSource>(() => RemoteDataSource(
         baseUrl: appConfig.baseUrl,
         connectTimeout: appConfig.connectTimeOut,
@@ -55,10 +48,9 @@ locator.registerLazySingleton<LocalRepository>(
         ts: appConfig.ts,
         apiKey: appConfig.apiKey,
       ));
+  
 
   locator.registerLazySingleton<LocalDataSource>(() => LocalDataSource());
 
-
-  // external
   locator.registerLazySingleton(() => http.Client());
 }
