@@ -8,6 +8,8 @@ import 'package:puntored/domain/entities/proveedores_recarga_entity.dart';
 import 'package:puntored/domain/repositories/puntored_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../model/proveedores_recarga_model.dart';
+
 class PuntoredRepositoryImpl implements PuntoredRepository {
   final RemoteDataSource remoteDataSource;
   final storage = FlutterSecureStorage();
@@ -15,14 +17,30 @@ class PuntoredRepositoryImpl implements PuntoredRepository {
   PuntoredRepositoryImpl({required this.remoteDataSource});
 
   @override
+  // Future<Either<Failure, List<ProveedorRecargaEntity>>>
+  // getProveedoresRecarga() async {
+  //   try {
+  //     final result = await remoteDataSource.getProveedoresRecarga();
+  //     return Right(result);
+  //   } on ServerException {
+  //     return const Left(ServerFailure('Error en el servidor'));
+  //   } on SocketException {
+  //     return const Left(ConnectionFailure('Error de conexión a la red'));
+  //   }
+  // }
+  @override
   Future<Either<Failure, List<ProveedorRecargaEntity>>>
   getProveedoresRecarga() async {
     try {
-      final result = await remoteDataSource.getProveedoresRecarga();
-      return Right(result);
+      final proveedores = await remoteDataSource
+          .get<List<ProveedorRecargaModel>>(
+            '/getSuppliers',
+            (json) => ProveedorRecargaModel.fromJsonList(json),
+          );
+      return Right(proveedores);
     } on ServerException {
       return const Left(ServerFailure('Error en el servidor'));
-    } on SocketException {
+    } on SocketException {  
       return const Left(ConnectionFailure('Error de conexión a la red'));
     }
   }

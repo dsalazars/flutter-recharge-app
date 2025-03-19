@@ -41,11 +41,11 @@ class RemoteDataSource {
         onRequest: (r, handler) async {
           r.headers['x-api-key'] = apiKey;
           final token = await getToken(); // Obtener el token dinámicamente
-          //print('Token recibido--------: ${token}');
+          print('Token recibido--------: ${token}');
 
           if (token != null) {
             r.headers['Authorization'] =
-                'Bearer $token'; // Agregar el token al header
+                token; // Agregar el token al header
           }
           handler.next(r);
         },
@@ -57,19 +57,19 @@ class RemoteDataSource {
   }
 
   ///  Obtiene la lista de proveedores de recarga desde la API
-  Future<List<ProveedorRecargaModel>> getProveedoresRecarga() async {
-    try {
-      final apiResponse = await _client.get('/getSuppliers');
+  // Future<List<ProveedorRecargaModel>> getProveedoresRecarga() async {
+  //   try {
+  //     final apiResponse = await _client.get('/getSuppliers');
 
-      if (apiResponse.statusCode == 200) {
-        return ProveedorRecargaModel.fromJsonList(apiResponse.data);
-      } else {
-        throw ServerException();
-      }
-    } catch (error) {
-      throw ServerException();
-    }
-  }
+  //     if (apiResponse.statusCode == 200) {
+  //       return ProveedorRecargaModel.fromJsonList(apiResponse.data);
+  //     } else {
+  //       throw ServerException();
+  //     }
+  //   } catch (error) {
+  //     throw ServerException();
+  //   }
+  // }
 
   // Future<String> login(String user, String password) async {
   //   final apiResponse = await _client.post(

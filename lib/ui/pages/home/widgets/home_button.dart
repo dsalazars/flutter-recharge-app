@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puntored/utils/constants.dart';
 import 'package:puntored/utils/utils.dart';
 
 class HomeButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class HomeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        Utils.showFunctionalityInDevelopmentMessage(context);
+        Navigator.pushNamed(context, Routes.recargas);
       },
       icon: Icon(icon, size: 24, color: Colors.white),
       label: Text(label, style: const TextStyle(color: Colors.white)),

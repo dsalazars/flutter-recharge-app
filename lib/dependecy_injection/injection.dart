@@ -9,6 +9,7 @@ import 'package:puntored/domain/repositories/puntored_repository.dart';
 import 'package:puntored/domain/use_cases/get_puntored_api.dart';
 import 'package:puntored/ui/pages/authentication/login/providers/login_provider.dart';
 import 'package:yaml/yaml.dart';
+import '../ui/pages/recargas/recargar/providers/proveedores_provider/proveedor_provider.dart';
 
 final locator = GetIt.instance;
 
@@ -28,6 +29,7 @@ Future<void> init() async {
 
 // login provider
 locator.registerLazySingleton(() => LoginNotifier(locator()));
+locator.registerLazySingleton(() => ProveedoresNotifier(locator()));
 
   // usecase
   locator.registerLazySingleton(() => GetPuntoredApi(locator()));
