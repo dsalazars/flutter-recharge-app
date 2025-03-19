@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:puntored/config/themes/defaul_theme.dart';
 import 'package:puntored/dependecy_injection/injection.dart' as di;
 import 'package:puntored/ui/pages/authentication/login/login_page.dart';
 import 'package:puntored/ui/routes.dart'; // Importa este paquete
@@ -32,8 +33,9 @@ class MyApp extends StatelessWidget {
       title: 'PuntoRed',
       debugShowCheckedModeBanner: false,
       routes: appRoutes,
-      theme: ThemeData(primaryColor: Colors.red),
+      theme: defaultTheme(),
       home: const LoginPage(),
     );
   }
+  
 }

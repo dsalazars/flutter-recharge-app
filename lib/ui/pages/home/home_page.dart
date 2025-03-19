@@ -7,6 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text(
           "Inicio",
@@ -18,7 +19,37 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Center(
+      body: 
+      SafeArea(
+        child: Column(
+          children: [
+            Expanded(child: ListView.builder(
+              itemCount: 8,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Container(
+                    color: Colors.white,
+                    child: InkWell(
+                      onTap: () {},
+                      child: ListTile(
+                        title: Text("Recarga $index"),
+                        subtitle: Text("Valor: \$${index * 1000}"),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            )),
+            HomeButton(
+              icon: Icons.phone_android,
+              label: "Recargar Ahora",
+              route: "/recargas",
+            ),
+          ],
+        ),
+      )
+      /* Center(
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
@@ -64,7 +95,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      ), */
     );
   }
 }

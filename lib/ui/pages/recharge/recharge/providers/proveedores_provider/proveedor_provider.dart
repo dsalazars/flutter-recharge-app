@@ -22,7 +22,7 @@ class ProveedoresNotifier extends StateNotifier<ProveedoresState> {
 
   Future<void> cargarProveedores() async {
     state = ProveedoresLoading();
-    final result = await getPuntoredApi.getProveedoresRecarga();
+    final result = await getPuntoredApi.getSuppliers();
     result.fold(
       (failure) {
         state = ProveedoresError(_mapFailureToMessage(failure));

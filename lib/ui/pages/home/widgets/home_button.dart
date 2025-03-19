@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:puntored/utils/constants.dart';
-import 'package:puntored/utils/utils.dart';
 
 class HomeButton extends StatelessWidget {
   final IconData icon;
@@ -23,7 +22,6 @@ class HomeButton extends StatelessWidget {
       icon: Icon(icon, size: 24, color: Colors.white),
       label: Text(label, style: const TextStyle(color: Colors.white)),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.pinkAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // Menos redondeado
         ),

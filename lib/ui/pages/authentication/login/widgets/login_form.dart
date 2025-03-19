@@ -31,39 +31,15 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       children: [
         TextField(
           controller: _emailController,
-          decoration: InputDecoration(
-            labelText: 'Usuario',
-            labelStyle: const TextStyle(color: Colors.pinkAccent),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.pinkAccent),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.pinkAccent, width: 2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
         ),
         const SizedBox(height: 16),
         TextField(
           controller: _passwordController,
           obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'Contraseña',
-            labelStyle: const TextStyle(color: Colors.pinkAccent),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.pinkAccent),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.pinkAccent, width: 2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
         ),
         const SizedBox(height: 24),
         loginState.isLoading
-            ? const Center(child: CircularProgressIndicator(color: Colors.pinkAccent))
+            ? const Center(child: CircularProgressIndicator.adaptive())
             : Column(
                 children: [
                   ElevatedButton(

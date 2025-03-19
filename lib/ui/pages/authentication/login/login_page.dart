@@ -21,12 +21,12 @@ class LoginPage extends ConsumerWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.pinkAccent.withOpacity(0.2),
+                    color: Colors.pink
                   ),
                   child: const Icon(
                     Icons.lock,
                     size: 80,
-                    color: Colors.pinkAccent,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 20),
