@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:puntored/data/exception.dart';
-import 'package:puntored/data/model/proveedores_recarga_model.dart';
-
 class RemoteDataSource {
   late BaseOptions _optionsApi;
   late Dio _client;
@@ -29,7 +27,7 @@ class RemoteDataSource {
     _client.interceptors.add(
       InterceptorsWrapper(
         onError: (e, handler) {
-          // ignore: unnecessary_null_comparison
+          // ignore: unnecessary_null_comparison 
           if (e == null) {
             handler.reject(e);
           } else {
@@ -41,7 +39,7 @@ class RemoteDataSource {
         onRequest: (r, handler) async {
           r.headers['x-api-key'] = apiKey;
           final token = await getToken(); // Obtener el token dinámicamente
-          print('Token recibido--------: ${token}');
+          //print('Token recibido--------: ${token}');
 
           if (token != null) {
             r.headers['Authorization'] =
@@ -55,47 +53,6 @@ class RemoteDataSource {
       ),
     );
   }
-
-  ///  Obtiene la lista de proveedores de recarga desde la API
-  // Future<List<ProveedorRecargaModel>> getProveedoresRecarga() async {
-  //   try {
-  //     final apiResponse = await _client.get('/getSuppliers');
-
-  //     if (apiResponse.statusCode == 200) {
-  //       return ProveedorRecargaModel.fromJsonList(apiResponse.data);
-  //     } else {
-  //       throw ServerException();
-  //     }
-  //   } catch (error) {
-  //     throw ServerException();
-  //   }
-  // }
-
-  // Future<String> login(String user, String password) async {
-  //   final apiResponse = await _client.post(
-  //     '/auth',
-  //     data: {"user": user, "password": password},
-  //     options: Options(headers: {'x-api-key': apiKey}),
-  //   );
-
-  //   if (apiResponse.statusCode == 200) {
-  //     final token = apiResponse.data['token'];
-  //     if (token != null) {
-  //       print('Token recibido: $token');
-
-  //       // // Guardar el token en SharedPreferences
-  //       // final prefs = await SharedPreferences.getInstance();
-  //       // await prefs.setString('auth_token', token);
-
-  //       return token;
-  //     } else {
-  //       throw ServerException();
-  //     }
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
-
   Future<String?> getToken() async {
     return await storage.read(key: 'auth_token');
   }

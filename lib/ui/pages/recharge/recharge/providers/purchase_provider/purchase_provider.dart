@@ -4,19 +4,18 @@ import 'package:puntored/domain/entities/purchase_request_entity.dart';
 import 'package:puntored/domain/entities/recharge_result_entity.dart';
 import 'package:puntored/domain/use_cases/get_puntored_api.dart';
 
-import '../../../../../../data/repositories/database_repository_impl.dart';
 import '../../../../../../dependecy_injection/injection.dart';
-import '../../../../../../domain/repositories/local_repository.dart';
 import '../../../../../../domain/use_cases/get_local_use_cases.dart';
 import 'purchase_state.dart';
 
 class PurchaseNotifier extends StateNotifier<PurchaseState> {
   final GetPuntoredApi getPuntoredApi;
+   final GetLocalUseCases localUseCases;
 
-
-  PurchaseNotifier(this.getPuntoredApi) : super(PurchaseIdle());
+  PurchaseNotifier(this.getPuntoredApi,) : super(PurchaseIdle());
 
   Future<void> realizarCompra(PurchaseRequestEntity purchase) async {
+   
     state = PurchaseLoading();
     final result = await getPuntoredApi.postPurchase(purchase);
     result.fold(
@@ -24,9 +23,6 @@ class PurchaseNotifier extends StateNotifier<PurchaseState> {
         state = PurchaseError(_mapFailureToMessage(failure));
       },
       (response) async {
-              final GetLocalUseCases localUseCases;
-              GetLocalUseCases repository =
-            GetLocalUseCases(repository: LocalRepository());
         state = PurchaseSuccess(response.message!);
 
         // Guardar respuesta en la base de datos local
