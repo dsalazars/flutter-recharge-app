@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puntored/ui/pages/authentication/login/providers/login_provider.dart';
-import 'package:puntored/ui/routes.dart';
+import 'package:puntored/ui/pages/authentication/login/widgets/login_button.dart';
+import 'package:puntored/ui/pages/authentication/login/widgets/login_inputs.dart';
 import 'package:puntored/utils/constants.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
@@ -21,7 +22,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
     ref.listen(loginProvider, (previous, next) {
       if (next.token != null) {
-        // Redireccionar al Home cuando el token no es nulo
         Navigator.pushReplacementNamed(context, Routes.home);
       }
     });
@@ -29,45 +29,20 @@ class _LoginFormState extends ConsumerState<LoginForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
-          controller: _emailController,
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _passwordController,
-          obscureText: true,
+        // Campos de usuario y contraseña
+        LoginInputs(
+          emailController: _emailController,
+          passwordController: _passwordController,
         ),
         const SizedBox(height: 24),
-        loginState.isLoading
-            ? const Center(child: CircularProgressIndicator.adaptive())
-            : Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.read(loginProvider.notifier).login(
-                            _emailController.text.trim(),
-                            _passwordController.text.trim(),
-                          );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pinkAccent,
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text("Iniciar sesión", style: TextStyle(color: Colors.white, fontSize: 16)),
-                  ),
-                  const SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {
-                      _emailController.clear();
-                      _passwordController.clear();
-                    },
-                    child: const Text("Limpiar campos", style: TextStyle(color: Colors.pinkAccent)),
-                  ),
-                ],
-              ),
+
+        // Botón de iniciar sesión
+        LoginButton(
+          emailController: _emailController,
+          passwordController: _passwordController,
+        ),
+
+        // Mensaje de error
         if (loginState.errorMessage != null) ...[
           const SizedBox(height: 10),
           Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puntored/ui/pages/home/widgets/home_button.dart';
+import 'package:puntored/ui/widgets/exit_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,36 +20,43 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: 
-      SafeArea(
+      body: SafeArea(
         child: Column(
           children: [
-            Expanded(child: ListView.builder(
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Container(
-                    color: Colors.white,
-                    child: InkWell(
-                      onTap: () {},
-                      child: ListTile(
-                        title: Text("Recarga $index"),
-                        subtitle: Text("Valor: \$${index * 1000}"),
+            // Lista de recargas
+            Expanded(
+              child: ListView.builder(
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Container(
+                      color: Colors.white,
+                      child: InkWell(
+                        onTap: () {},
+                        child: ListTile(
+                          title: Text("Recarga \$index"),
+                          subtitle: Text("Valor: \$${index * 1000}"),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-            )),
+                  );
+                },
+              ),
+            ),
+
+            // Botón de recargar
             HomeButton(
               icon: Icons.phone_android,
               label: "Recargar Ahora",
               route: "/recargas",
             ),
+
+            const ExitButton(),
+            const SizedBox(height: 20),
           ],
         ),
-      )
+      ),
       /* Center(
         child: Card(
           shape: RoundedRectangleBorder(

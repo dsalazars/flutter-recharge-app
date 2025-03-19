@@ -1,6 +1,7 @@
 import '../../../../../../domain/entities/proveedores_recarga_entity.dart';
 
-abstract class ProveedoresState {}
+abstract class ProveedoresState {
+}
 
 class ProveedoresLoading extends ProveedoresState {}
 

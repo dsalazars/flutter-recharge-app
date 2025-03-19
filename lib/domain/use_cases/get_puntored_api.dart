@@ -6,6 +6,7 @@ import 'package:puntored/domain/repositories/puntored_repository.dart';
 import '../entities/purchase_request_entity.dart';
 import '../entities/purchase_response_entity.dart';
 
+
 class GetPuntoredApi {
   final PuntoredRepository repository;
 
@@ -23,3 +24,4 @@ class GetPuntoredApi {
     return repository.postPurchase(data);
   }
 }
+
