@@ -13,8 +13,8 @@ class LoginForm extends ConsumerStatefulWidget {
 }
 
 class _LoginFormState extends ConsumerState<LoginForm> {
-  final _emailController = TextEditingController(text: "user0147");
-  final _passwordController = TextEditingController(text: "#3Q34Sh0NlDS");
+  final _emailController = TextEditingController(text: "");
+  final _passwordController = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
